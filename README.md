@@ -1,0 +1,1 @@
+# AnimeInfoApp_ReactNative
