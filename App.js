@@ -27,13 +27,15 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import HomeSceen from './src/screen/HomePage';
 import SerachResult from './src/screen/SerachResult';
+import Details from './src/screen/ShowDetail';
 import SearchBar from './src/screen/component/searchBar';
 
 const navigator = createStackNavigator(
   {
     Home: HomeSceen,
     SerachResult:SerachResult,
-    SearchBar:SearchBar
+    SearchBar:SearchBar,
+    Details:Details
   },
   {
     initialRouteName: 'Home',

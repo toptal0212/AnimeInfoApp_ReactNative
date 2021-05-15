@@ -7,14 +7,14 @@ const TopAnime = (props) => {
 
     return (
     <View style={styles.container}>
-        <Text style={styles.title}>Top Anime</Text>
+        <Text style={styles.title}>Top {props.type=='anime'?'Anime':'Manga'}</Text>
         <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
             data={props.data}
             renderItem={({item}) =>{
                 return (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{id : item.mal_id,type:props.type})}>
                         <ResultsDetail result={item}/>
                     </TouchableOpacity>
                 )

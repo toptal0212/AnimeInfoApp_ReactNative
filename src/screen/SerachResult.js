@@ -6,7 +6,7 @@ import moment from 'moment';
 //npm install --save moment
 
 
-const TopAnime = (props) => {
+const SearchResult = (props) => {
 
     const data = props.navigation.getParam('data');
     const serachName = props.navigation.getParam('search');
@@ -28,7 +28,7 @@ const TopAnime = (props) => {
             data={data}
             renderItem={({item}) =>{
                 return (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{id : item.mal_id})}>
                         {/* <ResultsDetail result={item}/> */}
                         <View  style={styles.data}>
                             <Image style={styles.image} source={{ uri:item.image_url}}/>
@@ -79,4 +79,6 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withNavigation(TopAnime);
+//export default withNavigation(TopAnime);
+
+export default SearchResult;

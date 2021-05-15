@@ -86,8 +86,8 @@ useEffect(()=>{
     if(!searchPage){
         pageData=(
         <ScrollView>
-            <TopAnimeManga data={topAnimeResult}/>
-            <TopAnimeManga data={todaysAnimeResult}/>
+            <TopAnimeManga data={topAnimeResult} type={'anime'}/>
+            <TopAnimeManga data={todaysAnimeResult} type={'manga'}/>
         </ScrollView>
         )
     }

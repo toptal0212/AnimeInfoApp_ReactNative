@@ -23,8 +23,8 @@ const TopAnime = (props) => {
                 //console.log(item,'top')
                 //console.log('toppp')
                 return (
-                    // <TouchableOpacity onPress={()=>props.navigation.navigate('Result' ,{id : item.id})}>
-                    <TouchableOpacity>
+                
+                    <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{id : item.mal_id})}>
                         {/* props.navigation.navigate(sceenName , value that want to pass) */}
                         {/* For props.navigation have to import 'withNavigation' */}
                         <ResultsDetail result={item}/>
