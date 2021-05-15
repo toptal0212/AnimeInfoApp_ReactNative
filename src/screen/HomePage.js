@@ -57,7 +57,7 @@ const HomeScreen = (props) => {
                 setErrorMsg('Data Not Found!');
             }else{
                 setErrorMsg('');
-                props.navigation.navigate('SerachResult' ,{data : response.data.results,search:search})
+                props.navigation.navigate('SerachResult' ,{data : response.data.results,search:search,type:serachType})
             }
             
         

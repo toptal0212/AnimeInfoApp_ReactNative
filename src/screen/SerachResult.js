@@ -10,6 +10,7 @@ const SearchResult = (props) => {
 
     const data = props.navigation.getParam('data');
     const serachName = props.navigation.getParam('search');
+    const type = props.navigation.getParam('type');
     // if(!props.result.length){
     //     return null;
     // }
@@ -28,7 +29,7 @@ const SearchResult = (props) => {
             data={data}
             renderItem={({item}) =>{
                 return (
-                    <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{id : item.mal_id})}>
+                    <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{id : item.mal_id,type:type})}>
                         {/* <ResultsDetail result={item}/> */}
                         <View  style={styles.data}>
                             <Image style={styles.image} source={{ uri:item.image_url}}/>

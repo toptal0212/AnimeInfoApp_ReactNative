@@ -47,11 +47,11 @@ const TopAnime = (props) => {
             <Text>Popularity Rank: {info.popularity}</Text>
 
             <Text>Synopsis: {info.synopsis}</Text>
-            <WebView
+            {/* <WebView
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 source={{uri: 'https://www.youtube.com/watch?v=hqfUo4MZvZo&ab_channel=LinusTechTips'}}
-            />
+            /> */}
         </ScrollView>
     </View>
     );
