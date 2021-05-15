@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import { View, Text, StyleSheet,ScrollView  } from 'react-native';
+import { View, Text, StyleSheet,ScrollView,TouchableHighlight  } from 'react-native';
 import jiken from '../api/jikan';
 import TopAnimeManga from './component/topAnime';
 import TopManga from './component/todaysAnime';
 import SerachBar from './component/searchBar';
 import SerachResults from './SerachResult';
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
 
     const [term,setTerm]=useState('');
     // const [searchAPi,errorMsg,result]=useResults();
@@ -16,6 +16,7 @@ const HomeScreen = () => {
     const[searchData,setSearchData]=useState([]);
     const[search,setSearch]=useState('');
     const[searchPage,setSearchPage]=useState(false);
+    const [serachType,setSerachType]=useState('anime');
 
     const topAnimeLoad =async()=>{
         try {
@@ -23,7 +24,12 @@ const HomeScreen = () => {
             setTopAnimeResult(response.data.top);
             //setTopAnimeResult(response.data.data.top);
             //console.log(response.data,'dddd')
-            setErrorMsg('');
+            if(response.data.top==null){
+                setErrorMsg('Data Not Found!');
+            }else{
+                setErrorMsg('');
+            }
+           
         }catch (err){
             console.log(err);
             setErrorMsg('Something Want Wrong');
@@ -36,26 +42,39 @@ const HomeScreen = () => {
             setErrorMsg('');
         }catch (err){
             console.log(err);
-            setErrorMsg('Something Want Wrong');
+            setErrorMsg('Data Not Found!');
         };
     }
 
     const searchResults =async()=>{
-        setSearchPage(true);
-        console.log(search);
+        //setSearchPage(true);
+        //console.log(serachType);
         try {
-            const response = await jiken.get('/search/anime?q='+search+'&page=1',{});
-            setSearchData(response.data.results);
-            console.log(response.data.results);
-            setErrorMsg('');
+            const response = await jiken.get('/search/'+serachType+'?q='+search+'&page=1',{});
+          // setSearchData(response.data.results);
+            //console.log(response.data.results);
+            if(response.data.top==[]){
+                setErrorMsg('Data Not Found!');
+            }else{
+                setErrorMsg('');
+                props.navigation.navigate('SerachResult' ,{data : response.data.results,search:search})
+            }
+            
+        
         }catch (err){
             console.log(err);
-            setErrorMsg('Something Want Wrong');
+            setErrorMsg('Data Not Found!');
         };
     }
 
-
-
+    const toAnimeHnadler =async()=>{
+        setSerachType('anime');
+        console.log(serachType);
+    }
+    const toMangaHnadler =async()=>{
+        setSerachType('manga');
+        console.log(serachType);
+    }
 
 useEffect(()=>{
     topAnimeLoad();
@@ -75,7 +94,7 @@ useEffect(()=>{
     else{
         pageData=(
             <ScrollView>
-                <SerachResults data={searchData}/>
+                {/* <SerachResults data={searchData}/> */}
             </ScrollView>
         )
     }
@@ -83,10 +102,16 @@ useEffect(()=>{
     return (
     <View style={{ flex: 1}}>
         <SerachBar
-         onTermChnage={newTerm => setSearch(newTerm)}
-         onTermSubmit={()=>searchResults()}
+        onTermChnage={newTerm => setSearch(newTerm)}
+        onTermSubmit={()=>searchResults()}
+        toAnime={toAnimeHnadler}
+        toManga={toMangaHnadler}
+        serachType={serachType}
         />
+ 
 
+
+        <Text>{errorMsg}</Text>
         {pageData}
 
     </View>

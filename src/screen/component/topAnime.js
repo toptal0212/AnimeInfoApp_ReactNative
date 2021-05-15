@@ -5,12 +5,6 @@ import ResultsDetail from './resultDetails';
 const TopAnime = (props) => {
 
 
-    // if(!props.result.length){
-    //     return null;
-    // }
-
-    //console.log(props.data)
-    //console.log('TOp');
     return (
     <View style={styles.container}>
         <Text style={styles.title}>Top Anime</Text>
@@ -19,21 +13,13 @@ const TopAnime = (props) => {
             showsHorizontalScrollIndicator={false}
             data={props.data}
             renderItem={({item}) =>{
-                //item is defult of renderItem
-                //console.log(item,'top')
-                //console.log('toppp')
                 return (
-                    // <TouchableOpacity onPress={()=>props.navigation.navigate('Result' ,{id : item.id})}>
                     <TouchableOpacity>
-                        {/* props.navigation.navigate(sceenName , value that want to pass) */}
-                        {/* For props.navigation have to import 'withNavigation' */}
                         <ResultsDetail result={item}/>
                     </TouchableOpacity>
                 )
-
             }}
         />
-        {/* <Text>{props.data.top[0].title}</Text> */}
     </View>
     );
 };
@@ -50,16 +36,6 @@ const styles = StyleSheet.create({
         borderBottomColor:'#F0EADE',
         paddingBottom:10,
         borderBottomWidth:3,
-        // shadowColor: "#000",
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 2,
-        // },
-        // shadowOpacity: 0.25,
-        // shadowRadius: 3.84,
-        
-        // elevation: 5,
-        
     },
 });
 

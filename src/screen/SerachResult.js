@@ -8,7 +8,8 @@ import moment from 'moment';
 
 const TopAnime = (props) => {
 
-
+    const data = props.navigation.getParam('data');
+    const serachName = props.navigation.getParam('search');
     // if(!props.result.length){
     //     return null;
     // }
@@ -17,13 +18,14 @@ const TopAnime = (props) => {
     //console.log('TOp');
     return (
     <View style={styles.container}>
-        <Text style={styles.title}>Search Results</Text>
+        <Text style={styles.title}>Search Results '{serachName}'</Text>
         <FlatList
            
             //horizontal
-            numColumns={1}
+            numColumns={3}
             showsHorizontalScrollIndicator={false}
-            data={props.data}
+            //data={props.data}
+            data={data}
             renderItem={({item}) =>{
                 return (
                     <TouchableOpacity>
@@ -35,7 +37,6 @@ const TopAnime = (props) => {
                         </View>
                     </TouchableOpacity>
                 )
-
             }}
         />
         {/* <Text>{props.data.top[0].title}</Text> */}
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
         marginBottom:5
     },
     container:{
-        // marginBottom:30,
+         marginTop:30,
         // borderBottomColor:'#F0EADE',
         // paddingBottom:10,
         // borderBottomWidth:3,
@@ -61,11 +62,13 @@ const styles = StyleSheet.create({
         marginLeft:15,
         marginRight:15,
         marginTop:10,
+        width:(Dimensions.get('window').width/3)-35
 
     },
     image:{
-        width: Dimensions.get('window').width-30,
-        height:100,
+        // width: Dimensions.get('window').width-30,
+        width:100,
+        height:170,
         borderRadius:4,
         marginBottom:6
     },

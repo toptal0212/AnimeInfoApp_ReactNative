@@ -27,14 +27,16 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import HomeSceen from './src/screen/HomePage';
 import SerachResult from './src/screen/SerachResult';
+import SearchBar from './src/screen/component/searchBar';
 
 const navigator = createStackNavigator(
   {
-    Search: HomeSceen,
-    SerachResult:SerachResult
+    Home: HomeSceen,
+    SerachResult:SerachResult,
+    SearchBar:SearchBar
   },
   {
-    initialRouteName: 'Search',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       title: 'Anime/Manga Finder',
     },
