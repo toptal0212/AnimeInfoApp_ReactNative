@@ -9,6 +9,9 @@ import axios from 'axios';
 
 const TopAnime = (props) => {
     const [info,setInfo] = useState('');
+    const [aired,setAired] = useState('');
+    const [studios,setStudios] = useState('');
+    const [licensors,setLicensors] = useState('');
     const id = props.navigation.getParam('id');
     const type = props.navigation.getParam('type');
     const [errorMsg, setErrorMsg]= useState('');
@@ -18,7 +21,11 @@ const TopAnime = (props) => {
             const response = await jiken.get('/'+type+'/'+id,{});
     
             setInfo(response.data);
-            console.log(response.data.mal_id);
+            setAired(response.data.aired.string);
+            setLicensors(response.data.licensors[0].name);
+            setStudios(response.data.studios[0].name);
+            
+            console.log(response.data.genres);
            
         }catch (err){
             console.log(err);
@@ -33,42 +40,74 @@ const TopAnime = (props) => {
     return (
     <View style={styles.container}>
         <ScrollView>
-            <Text style={styles.title}>Details</Text>
+            <Text style={styles.taitleTitle}>Details</Text>
             <Image style={styles.image} source={{ uri:info.image_url}}/>
+            <Text></Text>
+            <Text style={styles.title}>Information</Text>
             <Text>Name: {info.title}</Text>
             <Text>Japanese Name: {info.title_japanese}</Text>
             <Text>Total Episodes: {info.episodes== null? 'Unknown': info.episodes}</Text>
             <Text>Type: {info.type}</Text>
-            <Text>Rating: {info.rating}</Text>
-            {/* <Text>Aired: {info.aired.from}</Text> */}
+            <Text>Aired: {aired}</Text>
             <Text>Duration: {info.duration}</Text>
-            <Text>Score: {info.score}</Text>
-            <Text>Rank: {info.rank}</Text>
+            <Text>Licensors: {licensors}</Text>
+            <Text>Studios: {studios}</Text>
+            <Text>Rating: {info.rating}</Text>
+
+            <Text></Text>
+            <Text style={styles.title}>Genres</Text>
+            <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={info.genres}
+                    renderItem={({item}) =>{
+                        return(
+                            <Text>{item.name}  </Text>
+                        ) 
+                    }}/>
+
+
+
+
+
+
+            <Text></Text>
+            <Text style={styles.title}>Statistics</Text>
+            <Text>Score: {info.score==null?'NaN':info.score}</Text>
+            <Text>Rank: {info.rank==null?'NaN':info.rank}</Text>
             <Text>Popularity Rank: {info.popularity}</Text>
 
-            <Text>Synopsis: {info.synopsis}</Text>
-            {/* <WebView
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                source={{uri: 'https://www.youtube.com/watch?v=hqfUo4MZvZo&ab_channel=LinusTechTips'}}
-            /> */}
+
+
+
+
+            <Text></Text>
+            <Text style={styles.title}>Synopsis</Text>
+            <Text>{info.synopsis}</Text>
         </ScrollView>
     </View>
     );
 };
 
 const styles = StyleSheet.create({
-    title:{
+    taitleTitle:{
         fontSize:20,
         fontWeight:'bold',
-        marginBottom:15
+        marginBottom:15,
+        textDecorationLine: 'underline',
+    },
+    title:{
+        fontSize:16,
+        fontWeight:'bold',
+        marginBottom:5,
+        paddingBottom:5,
+        borderBottomWidth:2
     },
     container:{
          marginTop:30,
          marginLeft:15,
         // borderBottomColor:'#F0EADE',
         // paddingBottom:10,
-        borderBottomWidth:3,
        
     },
     data:{

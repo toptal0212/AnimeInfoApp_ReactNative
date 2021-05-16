@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     },
     container:{
         marginBottom:15,
-        borderBottomColor:'#F0EADE',
+        borderBottomColor:'black',
         paddingBottom:10,
         borderBottomWidth:3,
     },

@@ -10,7 +10,7 @@ const ResultsDetail = (props) => {
     <View style={styles.container}>
         <Image style={styles.image} source={{ uri:props.result.image_url}}/>
         <Text style={styles.name}>{props.result.title}</Text>
-        <Text style={styles.name1}>Rating: {props.result.score}</Text>
+        <Text style={styles.name1}>Rating: {props.result.score==null?'NaN':props.result.score}</Text>
         {/* <Text style={styles.name1}>Epasords: {props.result.episodes}</Text> */}
     </View>
     );

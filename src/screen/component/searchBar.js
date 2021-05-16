@@ -35,12 +35,12 @@ const SearchScreen = ({term,onTermChnage,onTermSubmit,serachType,toAnime,toManga
                 <Pressable 
                     onPress={toAnime.bind()}
                     style={serachType=='anime'? styles.btnAMSelected:styles.btnAM}>
-                        <Text style={styles.btnText}>Anime</Text>
+                        <Text style={serachType=='anime'? styles.btnTextSelected: styles.btnText}>Anime</Text>
                 </Pressable>
                 <Pressable 
                     onPress={toManga.bind()}
                     style={serachType=='manga'? styles.btnAMSelected:styles.btnAM}>
-                        <Text style={styles.btnText}>Manga</Text>
+                        <Text style={serachType=='manga'? styles.btnTextSelected: styles.btnText}>Manga</Text>
                 </Pressable>
             </View>
 
@@ -52,10 +52,11 @@ const styles = StyleSheet.create({
 
     background:{
         marginTop:15,
-        marginBottom:35,
-        backgroundColor:'#F0EADE',
+        marginBottom:25,
+        backgroundColor:'white',
+        borderWidth:2,
         height:50,
-        borderRadius:5,
+        borderRadius:30,
         marginHorizontal:15,
         flexDirection:'row',
     },
@@ -66,21 +67,23 @@ const styles = StyleSheet.create({
     searchIcon:{
         fontSize:35,
         alignSelf:'center',
-        marginLeft:2,
+        marginLeft:8,
         marginRight:3
     },
     buttons:{
         width:100,
         flexDirection:'row',
+        marginHorizontal:15,
         
     },
     btnAM:{
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 4,
-        elevation: 3,
+        elevation: 4,
         marginLeft:5,
-        backgroundColor:'#F0EADE',
+        backgroundColor:'white',
+        borderWidth:2,
         height:30,
         width:80
     },
@@ -90,16 +93,21 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         elevation: 3,
         marginLeft:5,
-        backgroundColor:'#F0E12E',
+        backgroundColor:'black',
         height:30,
         width:80
     },
-    btnNormal:{
-        borderColor: 'blue',
-        borderWidth: 1,
-        borderRadius: 10,
-        height: 30,
-        width: 100,
+    btnText:{
+        color:'black',
+        fontWeight:'bold',
+        paddingBottom:2,
+        fontSize:15
+    },
+    btnTextSelected:{
+        color:'white',
+        fontWeight:'bold',
+        paddingBottom:2,
+        fontSize:15
     },
     btnPress:{
         borderColor: 'blue',

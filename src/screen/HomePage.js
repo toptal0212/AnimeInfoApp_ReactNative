@@ -5,18 +5,15 @@ import TopAnimeManga from './component/topAnime';
 import TopManga from './component/todaysAnime';
 import SerachBar from './component/searchBar';
 import SerachResults from './SerachResult';
-
+import UpcomingAnime from './component/upcomingAnime';
 const HomeScreen = (props) => {
 
-    const [term,setTerm]=useState('');
-    // const [searchAPi,errorMsg,result]=useResults();
     const [topAnimeResult,setTopAnimeResult]= useState([]);
     const [todaysAnimeResult,setTodaysAnimeResult]= useState([]);
     const [errorMsg, setErrorMsg]= useState('');
-    const[searchData,setSearchData]=useState([]);
     const[search,setSearch]=useState('');
-    const[searchPage,setSearchPage]=useState(false);
     const [serachType,setSerachType]=useState('anime');
+
 
     const topAnimeLoad =async()=>{
         try {
@@ -29,7 +26,7 @@ const HomeScreen = (props) => {
             }else{
                 setErrorMsg('');
             }
-           
+        
         }catch (err){
             console.log(err);
             setErrorMsg('Something Want Wrong');
@@ -47,12 +44,9 @@ const HomeScreen = (props) => {
     }
 
     const searchResults =async()=>{
-        //setSearchPage(true);
-        //console.log(serachType);
         try {
             const response = await jiken.get('/search/'+serachType+'?q='+search+'&page=1',{});
-          // setSearchData(response.data.results);
-            //console.log(response.data.results);
+
             if(response.data.top==[]){
                 setErrorMsg('Data Not Found!');
             }else{
@@ -83,18 +77,20 @@ useEffect(()=>{
 
 
     let pageData ='';
-    if(!searchPage){
+    if(serachType=='anime'){
         pageData=(
         <ScrollView>
             <TopAnimeManga data={topAnimeResult} type={'anime'}/>
-            <TopAnimeManga data={todaysAnimeResult} type={'manga'}/>
+            <UpcomingAnime season={'winter'}/>
+            <UpcomingAnime season={'summer'}/>
+            <UpcomingAnime season={'fall'}/>
         </ScrollView>
         )
     }
     else{
         pageData=(
             <ScrollView>
-                {/* <SerachResults data={searchData}/> */}
+                <TopAnimeManga data={todaysAnimeResult} type={'manga'}/> 
             </ScrollView>
         )
     }
