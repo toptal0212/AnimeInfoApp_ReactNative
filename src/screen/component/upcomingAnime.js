@@ -35,6 +35,8 @@ const UpcomingAnime = (props) => {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     data={upcomingAnimeList}
+                    keyExtractor={(r) =>r.mal_id}
+                    //key={1}
                     renderItem={({item}) =>{
                         return (
                             <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{id : item.mal_id,type:'anime'})}>
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     },
     container:{
         marginTop:5,
-        marginBottom:15,
+        //marginBottom:15,
         borderBottomColor:'black',
         paddingBottom:10,
         borderBottomWidth:3,

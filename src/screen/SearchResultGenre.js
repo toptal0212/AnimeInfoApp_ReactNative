@@ -4,34 +4,46 @@ import {withNavigation} from 'react-navigation';
 import ResultsDetail from './component/resultDetails';
 import moment from 'moment';
 //npm install --save moment
+import jiken from '../api/jikan';
 
+const SearchResultGenre = (props) => {
 
-const SearchResult = (props) => {
-
-    const data = props.navigation.getParam('data');
-    const serachName = props.navigation.getParam('search');
+    
     const type = props.navigation.getParam('type');
-    // if(!props.result.length){
-    //     return null;
-    // }
+    const searchTopic = props.navigation.getParam('searchTopic');
+    const id = props.navigation.getParam('id');
+    const [data,setData]= useState([]);
 
-    //console.log(props.data)
-    console.log(data.mal_id);
+    const loadDetails =async()=>{
+        try {
+            const response = await jiken.get('/search/anime?genre='+id+'&genre_exclude=0&order_by=score&sort=desc&type='+type,{});
+            setData(response.data);
+           // console.log(response.data)
+           
+        }catch (err){
+            console.log(err);
+            setErrorMsg('Data Not Found!');
+        };
+    }
+
+    useEffect(()=>{
+        loadDetails();
+        },[searchTopic]);
+
     return (
     <View style={styles.container}>
-        <Text style={styles.title}>Search Results '{serachName}'</Text>
+        <Text style={styles.title}>Search Results '{searchTopic}'</Text>
         <FlatList
-           
             //horizontal
             numColumns={3}
             showsHorizontalScrollIndicator={false}
             
-            data={data}
+            data={data.results}
             keyExtractor={(r) => r.mal_id}
             renderItem={({item}) =>{
                 return (
                     <TouchableOpacity 
-                    onPress={()=>props.navigation.navigate('Details',{id : item.mal_id,type:type})}>
+                    onPress={()=>props.navigation.navigate('Details',{id : item.mal_id,type:'anime'})}>
                         {/* <ResultsDetail result={item}/> */}
                         <View  style={styles.data}>
                             <Image style={styles.image} source={{ uri:item.image_url}}/>
@@ -42,7 +54,6 @@ const SearchResult = (props) => {
                 )
             }}
         />
-        {/* <Text>{props.data.top[0].title}</Text> */}
     </View>
     );
 };
@@ -84,4 +95,4 @@ const styles = StyleSheet.create({
 
 //export default withNavigation(TopAnime);
 
-export default SearchResult;
+export default withNavigation(SearchResultGenre);

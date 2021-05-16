@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View, Text, StyleSheet,FlatList,ScrollView,TouchableOpacity,Image,Dimensions  } from 'react-native';
+import { View, Text, StyleSheet,ScrollView,TouchableOpacity,FlatList,Image,Dimensions,Pressable, Touchable  } from 'react-native';
 import { WebView } from 'react-native-webview';
 import {withNavigation} from 'react-navigation'; 
 import moment from 'moment';
@@ -12,6 +12,7 @@ const TopAnime = (props) => {
     const [aired,setAired] = useState('');
     const [studios,setStudios] = useState('');
     const [licensors,setLicensors] = useState('');
+    const [genres,setGenres] = useState([]);
     const id = props.navigation.getParam('id');
     const type = props.navigation.getParam('type');
     const [errorMsg, setErrorMsg]= useState('');
@@ -24,8 +25,8 @@ const TopAnime = (props) => {
             setAired(response.data.aired.string);
             setLicensors(response.data.licensors[0].name);
             setStudios(response.data.studios[0].name);
-            
-            console.log(response.data.genres);
+            setGenres(response.data.genres);
+           console.log(response.data.genres);
            
         }catch (err){
             console.log(err);
@@ -35,7 +36,7 @@ const TopAnime = (props) => {
 
     useEffect(()=>{
         loadDetails();
-        },[]);
+        },[id]);
 
     return (
     <View style={styles.container}>
@@ -47,7 +48,9 @@ const TopAnime = (props) => {
             <Text>Name: {info.title}</Text>
             <Text>Japanese Name: {info.title_japanese}</Text>
             <Text>Total Episodes: {info.episodes== null? 'Unknown': info.episodes}</Text>
-            <Text>Type: {info.type}</Text>
+            <TouchableOpacity  onPress={()=>props.navigation.navigate('SerachResultGenre',{type : info.type,searchTopic:info.type})}>
+                <Text>Type:{info.type}</Text> 
+            </TouchableOpacity>
             <Text>Aired: {aired}</Text>
             <Text>Duration: {info.duration}</Text>
             <Text>Licensors: {licensors}</Text>
@@ -56,7 +59,8 @@ const TopAnime = (props) => {
 
             <Text></Text>
             <Text style={styles.title}>Genres</Text>
-            <FlatList
+            {/* <FlatList
+                style={styles.genres}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     data={info.genres}
@@ -64,11 +68,27 @@ const TopAnime = (props) => {
                         return(
                             <Text>{item.name}  </Text>
                         ) 
-                    }}/>
+            }}/> */}
 
+            {/* <TouchableOpacity>
+                {genres.map((data,i)=>
+                    <Pressable  
+                    key={data.mal_id}
+                    onPress={()=>props.navigation.navigate('Details',{id : data.mal_id,type:data.name})}
+                    >
+                        {data.name}    </Pressable>
+                )
+                }
+            </TouchableOpacity> */}
 
-
-
+            <Text>
+                {genres.map((data,i)=>
+                    <TouchableOpacity style={styles.TouchableOpacity} onPress={()=>props.navigation.navigate('SerachResultGenre',{id : data.mal_id,searchTopic:data.name})}>
+                        <Text key={i}>{data.name} </Text>
+                    </TouchableOpacity>
+                )
+                }
+            </Text>
 
 
             <Text></Text>
@@ -128,7 +148,16 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize:14,
         marginBottom:5
+    },
+    genres:{
+        width:100
+    },
+    TouchableOpacity:{
+        alignItems: "center",
+        backgroundColor: "#DDDDDD",
+        padding: 10,
+        marginRight:50,
     }
 });
 
-export default TopAnime;
+export default withNavigation(TopAnime);

@@ -2,9 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { View, Text, StyleSheet,ScrollView,TouchableHighlight  } from 'react-native';
 import jiken from '../api/jikan';
 import TopAnimeManga from './component/topAnime';
-import TopManga from './component/todaysAnime';
 import SerachBar from './component/searchBar';
-import SerachResults from './SerachResult';
 import UpcomingAnime from './component/upcomingAnime';
 const HomeScreen = (props) => {
 
