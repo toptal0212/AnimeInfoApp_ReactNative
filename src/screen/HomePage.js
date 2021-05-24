@@ -1,5 +1,5 @@
-import React,{useState,useEffect,useRef} from 'react';
-import { View, Text, StyleSheet,ScrollView,TouchableHighlight  } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { View, Text, StyleSheet,ScrollView  } from 'react-native';
 import jiken from '../api/jikan';
 import TopAnimeManga from './component/topAnime';
 import SerachBar from './component/searchBar';

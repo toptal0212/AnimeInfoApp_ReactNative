@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react';
-import { View, Text, StyleSheet,FlatList,ScrollView,TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet,FlatList,TouchableOpacity } from 'react-native';
 import {withNavigation} from 'react-navigation'; 
 import ResultsDetail from './resultDetails';
 import { AntDesign } from '@expo/vector-icons'; 

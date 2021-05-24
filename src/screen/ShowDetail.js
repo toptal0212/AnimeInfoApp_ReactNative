@@ -1,11 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import { View, Text, StyleSheet,ScrollView,TouchableOpacity,FlatList,Image,Dimensions,Pressable, Touchable  } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { View, Text, StyleSheet,ScrollView,TouchableOpacity,Image,Dimensions  } from 'react-native';
 import {withNavigation} from 'react-navigation'; 
-import moment from 'moment';
 //npm install --save moment
 import jiken from '../api/jikan';
-import axios from 'axios';
+
 
 const TopAnime = (props) => {
     const [info,setInfo] = useState('');

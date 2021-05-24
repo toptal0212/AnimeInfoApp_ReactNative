@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { View, Text, StyleSheet,FlatList,ScrollView,TouchableOpacity,Image,Dimensions  } from 'react-native';
 import {withNavigation} from 'react-navigation'; 
-import ResultsDetail from './component/resultDetails';
 import moment from 'moment';
 //npm install --save moment
 import jiken from '../api/jikan';
