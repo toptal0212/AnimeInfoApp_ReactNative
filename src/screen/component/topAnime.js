@@ -13,7 +13,7 @@ const TopAnime = (props) => {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={[...props.data,{type:'nextBtn',mal_id:'nextBtn'}]}
-            keyExtractor={(r) => r.mal_id}
+            //keyExtractor={(r) => r.mal_id}
             renderItem={({item}) =>{
                 return (
 

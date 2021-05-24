@@ -20,19 +20,15 @@ const HomeScreen = (props) => {
             const response = await jiken.get('/top/anime/'+pageNum,{});
             let temp = [...topAnimeResult,...response.data.top];
             //setTopAnimeResult(response.data.top);
-
             setTopAnimeResult(temp);
             //setTopAnimeResult(response.data.data.top);
             //console.log(response.data.top,'dddd')
-            
-            console.log(page1,'page1');
 
             if(response.data.top==null){
                 setErrorMsg('Data Not Found!');
             }else{
                 setErrorMsg('');
             }
-        
         }catch (err){
             console.log(err);
             //setErrorMsg('Something Want Wrong');
@@ -47,7 +43,7 @@ const HomeScreen = (props) => {
             setErrorMsg('');
         }catch (err){
             console.log(err);
-            setErrorMsg('Data Not Found!');
+            //setErrorMsg('Data Not Loaded!');
         };
     }
 
