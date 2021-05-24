@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
         borderBottomColor:'black',
         paddingBottom:10,
         borderBottomWidth:3,
-       
     },
     data:{
         marginLeft:15,

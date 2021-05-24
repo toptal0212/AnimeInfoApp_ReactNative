@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import { View, Text, StyleSheet,ScrollView,TouchableHighlight  } from 'react-native';
 import jiken from '../api/jikan';
 import TopAnimeManga from './component/topAnime';
@@ -7,18 +7,26 @@ import UpcomingAnime from './component/upcomingAnime';
 const HomeScreen = (props) => {
 
     const [topAnimeResult,setTopAnimeResult]= useState([]);
-    const [todaysAnimeResult,setTodaysAnimeResult]= useState([]);
+    const [topMangaResult,setTopMangaResult]= useState([]);
     const [errorMsg, setErrorMsg]= useState('');
     const[search,setSearch]=useState('');
     const [serachType,setSerachType]=useState('anime');
+    const[pageAnime,setPageAnime]=useState(1);
+    const[pageManga,setPageManga]=useState(1);
 
-
-    const topAnimeLoad =async()=>{
+    const topAnimeLoad =async(pageNum)=>{
         try {
-            const response = await jiken.get('/top/anime/1',{});
-            setTopAnimeResult(response.data.top);
+            setPageAnime(pageNum);
+            const response = await jiken.get('/top/anime/'+pageNum,{});
+            let temp = [...topAnimeResult,...response.data.top];
+            //setTopAnimeResult(response.data.top);
+
+            setTopAnimeResult(temp);
             //setTopAnimeResult(response.data.data.top);
-            //console.log(response.data,'dddd')
+            //console.log(response.data.top,'dddd')
+            
+            console.log(page1,'page1');
+
             if(response.data.top==null){
                 setErrorMsg('Data Not Found!');
             }else{
@@ -27,13 +35,15 @@ const HomeScreen = (props) => {
         
         }catch (err){
             console.log(err);
-            setErrorMsg('Something Want Wrong');
+            //setErrorMsg('Something Want Wrong');
         };
     }
-    const topMangaLoad =async()=>{
+    const topMangaLoad =async(pageNum)=>{
         try {
-            const response = await jiken.get('/top/manga/1',{});
-            setTodaysAnimeResult(response.data.top);
+            setPageManga(pageNum);
+            const response = await jiken.get('/top/manga/'+pageNum,{});
+            let temp = [...topMangaResult,...response.data.top];
+            setTopMangaResult(temp);
             setErrorMsg('');
         }catch (err){
             console.log(err);
@@ -45,17 +55,25 @@ const HomeScreen = (props) => {
         try {
             const response = await jiken.get('/search/'+serachType+'?q='+search+'&page=1',{});
 
+            
             if(response.data.top==[]){
                 setErrorMsg('Data Not Found!');
-            }else{
+            }else if(search==null){
+                setErrorMsg('');
+            }
+            else{
                 setErrorMsg('');
                 props.navigation.navigate('SerachResult' ,{data : response.data.results,search:search,type:serachType})
             }
             
         
         }catch (err){
-            console.log(err);
-            setErrorMsg('Data Not Found!');
+            //console.log(err);
+            if(search==''){
+                setErrorMsg('');
+            }else{
+                setErrorMsg('Data Not Found!');
+            }
         };
     }
 
@@ -67,10 +85,27 @@ const HomeScreen = (props) => {
         setSerachType('manga');
         console.log(serachType);
     }
+    const nextPageAnime=()=>{
+
+        if(pageAnime<20){
+            topAnimeLoad(pageAnime+1);
+        }
+    }
+    const nextPageManga=()=>{
+
+        if(pageManga<20){
+            topMangaLoad(pageManga+1);
+        }
+    }
+        
+    const nextZero=()=>{
+        setPage(1);
+        topAnimeLoad();
+    }
 
 useEffect(()=>{
-    topAnimeLoad();
-    topMangaLoad();
+    topAnimeLoad(1);
+    topMangaLoad(1);
     },[]);
 
 
@@ -78,7 +113,7 @@ useEffect(()=>{
     if(serachType=='anime'){
         pageData=(
         <ScrollView>
-            <TopAnimeManga data={topAnimeResult} type={'anime'}/>
+            <TopAnimeManga data={topAnimeResult} type={'anime'} nextPage={nextPageAnime} pageZero={nextZero}/>
             <UpcomingAnime season={'winter'}/>
             <UpcomingAnime season={'summer'}/>
             <UpcomingAnime season={'fall'}/>
@@ -88,7 +123,7 @@ useEffect(()=>{
     else{
         pageData=(
             <ScrollView>
-                <TopAnimeManga data={todaysAnimeResult} type={'manga'}/> 
+                <TopAnimeManga data={topMangaResult} type={'manga'} nextPage={nextPageManga}/> 
             </ScrollView>
         )
     }
@@ -105,7 +140,7 @@ useEffect(()=>{
  
 
 
-        <Text>{errorMsg}</Text>
+        <Text style={{marginLeft:20,marginTop:8,marginBottom:8,color:'red'}}>{errorMsg}</Text>
         {pageData}
 
     </View>
@@ -114,8 +149,7 @@ useEffect(()=>{
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
-        
+        flex:1,   
     }
 });
 
