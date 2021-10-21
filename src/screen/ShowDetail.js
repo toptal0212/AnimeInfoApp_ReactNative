@@ -24,8 +24,8 @@ const TopAnime = (props) => {
             setLicensors(response.data.licensors[0].name);
             setStudios(response.data.studios[0].name);
             setGenres(response.data.genres);
-           console.log(response.data.genres);
-           
+            console.log(response.data.genres);
+        
         }catch (err){
             console.log(err);
             setErrorMsg('Data Not Found!');
@@ -82,7 +82,7 @@ const TopAnime = (props) => {
             <Text>
                 {genres.map((data,i)=>
                     <TouchableOpacity style={styles.TouchableOpacity} onPress={()=>props.navigation.navigate('SerachResultGenre',{id : data.mal_id,searchTopic:data.name})}>
-                        <Text key={i}>{data.name} </Text>
+                        <Text key={i}>{data.name}  </Text>
                     </TouchableOpacity>
                 )
                 }
