@@ -3,6 +3,7 @@ import { View, Text, StyleSheet,FlatList,ScrollView,TouchableOpacity,Dimensions,
 import {withNavigation} from 'react-navigation'; 
 import jiken from '../../api/jikan';
 import ResultsDetail from './resultDetails';
+import Loading  from './loading';
 
 const UpcomingAnime = (props) => {
     const [upcomingAnimeList,setUpcomingAnimeList]=useState([]);
@@ -19,18 +20,27 @@ const UpcomingAnime = (props) => {
             console.log(err);
             setErrorMsg('Data Not Found!');
         };
+
     }
 
 
     useEffect(()=>{
         searchResults();
-        },[]);
+    },[]);
     
 
+    useEffect(()=>{
+        if(upcomingAnimeList==[] || upcomingAnimeList==''){
+            console.log('upcomingAnimeList check ' ,upcomingAnimeList);
+            searchResults();
+        }
+    },[upcomingAnimeList]);
 
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Upcomming Anime {year}({props.season})</Text>
+                
+                {upcomingAnimeList==[] ||upcomingAnimeList!=''?
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -44,7 +54,7 @@ const UpcomingAnime = (props) => {
                             </TouchableOpacity>
                         )
                     }}
-                />
+                />: <Loading/>}
             </View>
             );
         };

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet,ScrollView,TouchableOpacity,Image,Dimensions  } 
 import {withNavigation} from 'react-navigation'; 
 //npm install --save moment
 import jiken from '../api/jikan';
-
+import { Placeholder,PlaceholderMedia,PlaceholderLine,Fade} from "rn-placeholder";
 
 const TopAnime = (props) => {
     const [info,setInfo] = useState('');
@@ -38,6 +38,8 @@ const TopAnime = (props) => {
 
     return (
     <View style={styles.container}>
+
+        {info.title!=null?
         <ScrollView>
             <Text style={styles.taitleTitle}>Details</Text>
             <Image style={styles.image} source={{ uri:info.image_url}}/>
@@ -103,6 +105,25 @@ const TopAnime = (props) => {
             <Text style={styles.title}>Synopsis</Text>
             <Text>{info.synopsis}</Text>
         </ScrollView>
+
+        : <Placeholder Animation={Fade}>
+            <Text style={styles.taitleTitle}>Details</Text>
+            <PlaceholderMedia  style={{width:100,height:160}}/>
+            <Text />
+            <PlaceholderLine width={90} />
+            <PlaceholderLine width={50} />
+            <PlaceholderLine width={50} />
+            <PlaceholderLine width={30} />
+            <PlaceholderLine width={40} />
+            <PlaceholderLine width={65} />
+            <PlaceholderLine width={45} />
+            <PlaceholderLine width={20} />
+            <PlaceholderLine width={50} />
+            <PlaceholderLine width={80} />
+            <PlaceholderLine width={40} />
+
+        </Placeholder>}
+
     </View>
     );
 };

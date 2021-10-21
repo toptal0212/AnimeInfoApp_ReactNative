@@ -11,19 +11,19 @@ import {
 const Loading = (props) => {
 
 
-    var data = [];
+    // var data = [];
 
-	for(let i = 0; i < 5; i++){
+	// for(let i = 0; i < 5; i++){
 
-		data.push(
-            <Placeholder Animation={Fade}>
-                <PlaceholderMedia  style={{width:100,height:160}}/>
-                <Text />
-                <PlaceholderLine width={80} />
-                <PlaceholderLine width={30} />
-            </Placeholder>
-		)
-	}
+	// 	data.push(
+    //         <Placeholder Animation={Fade}>
+    //             <PlaceholderMedia  style={{width:100,height:160}}/>
+    //             <Text />
+    //             <PlaceholderLine width={80} />
+    //             <PlaceholderLine width={30} />
+    //         </Placeholder>
+	// 	)
+	// }
 
   // console.log(props);
     return (

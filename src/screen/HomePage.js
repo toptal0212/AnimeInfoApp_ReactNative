@@ -15,24 +15,24 @@ const HomeScreen = (props) => {
     const[pageManga,setPageManga]=useState(1);
 
     const topAnimeLoad =async(pageNum)=>{
-        // try {
-        //     setPageAnime(pageNum);
-        //     const response = await jiken.get('/top/anime/'+pageNum,{});
-        //     let temp = [...topAnimeResult,...response.data.top];
-        //     //setTopAnimeResult(response.data.top);
-        //     setTopAnimeResult(temp);
-        //     //setTopAnimeResult(response.data.data.top);
-        //     //console.log(response.data.top,'dddd')
+        try {
+            setPageAnime(pageNum);
+            const response = await jiken.get('/top/anime/'+pageNum,{});
+            let temp = [...topAnimeResult,...response.data.top];
+            //setTopAnimeResult(response.data.top);
+            setTopAnimeResult(temp);
+            //setTopAnimeResult(response.data.data.top);
+            //console.log(response.data.top,'dddd')
 
-        //     if(response.data.top==null){
-        //         setErrorMsg('Data Not Found!');
-        //     }else{
-        //         setErrorMsg('');
-        //     }
-        // }catch (err){
-        //     console.log(err);
-        //     //setErrorMsg('Something Want Wrong');
-        // };
+            if(response.data.top==null){
+                setErrorMsg('Data Not Found!');
+            }else{
+                setErrorMsg('');
+            }
+        }catch (err){
+            console.log(err);
+            //setErrorMsg('Something Want Wrong');
+        };
     }
     const topMangaLoad =async(pageNum)=>{
         try {
@@ -109,7 +109,7 @@ useEffect(()=>{
     if(serachType=='anime'){
         pageData=(
         <ScrollView>
-            <TopAnimeManga data={topAnimeResult} type={'anime'} nextPage={nextPageAnime} pageZero={nextZero}/>
+            <TopAnimeManga data={topAnimeResult} type={'anime'} nextPage={nextPageAnime} pageZero={nextZero} topAnimeLoad={topAnimeLoad}/>
             <UpcomingAnime season={'winter'}/>
             <UpcomingAnime season={'summer'}/>
             <UpcomingAnime season={'fall'}/>
